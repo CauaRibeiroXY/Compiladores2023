@@ -1,0 +1,465 @@
+//Cauã Ribeiro da Costa e Aguiar
+options {
+    IGNORE_CASE = true;
+    //DEBUG_TOKEN_MANAGER = true;
+  }
+PARSER_BEGIN(Rust)
+
+public class Rust {
+    public static void main(String args[]) {
+        Rust parser;
+
+        if (args.length == 0) {
+            parser = new Rust(System.in);
+        } else {
+            try {
+                parser = new Rust(new java.io.FileInputStream(args[0]));
+            } catch (java.io.FileNotFoundException e) {
+                System.out.println("Error: The file " + args[0] + " was not found.");
+                return;
+            }
+        }
+        try {
+            parser.enable_tracing();
+            parser.Start();
+        } catch (ParseException e) {
+            System.out.println("Error: There was an error during the parse.");
+            System.out.println(e.getMessage());
+        } catch (TokenMgrError e) {
+            System.out.println("Error: There was an error.");
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
+PARSER_END(Rust)
+
+SKIP: {
+    " " | "\t" | "\n" | "\r" | "U+000B" | "U+000C" | "U+000D" | "U+0020" | "U+0085" | "U+200E" | "U+200F" | "U+2028" | "U+2029"
+}
+
+//Keywords
+TOKEN:{
+    //Strict keywords
+    <KW_AS: "as">{System.out.println("KW_AS " + image);}
+    |<KW_BREAK: "break">{System.out.println("KW_BREAK " + image);}
+    |<KW_CONST: "const">{System.out.println("KW_CONST " + image);}
+    |<KW_CONTINUE: "continue">{System.out.println("KW_CONTINUE " + image);}
+    |<KW_CRATE: "crate" >{System.out.println("KW_CRATE " + image);}
+    |<KW_ELSE: "else" >{System.out.println("KW_ELSE " + image);}
+    |<KW_ENUM: "enum" >{System.out.println("KW_ENUM " + image);}
+    |<KW_EXTERN: "extern"> {System.out.println("KW_EXTERN: " + image);}
+    |<KW_FALSE: "false" >{System.out.println("KW_FALSE " + image);}
+    |<KW_FN: "fn"> {System.out.println("KW_FN " + image);}
+    |<KW_FOR: "for"> {System.out.println("KW_FOR " + image);}
+    |<KW_IF: "if"> {System.out.println("KW_IF " + image);}
+    |<KW_IMPL: "impl"> {System.out.println("KW_IMPL " + image);}
+    |<KW_IN: "in"> {System.out.println("KW_IN " + image);}
+    |<KW_LET: "let"> {System.out.println("KW_LET " + image);}
+    |<KW_LOOP: "loop"> {System.out.println("KW_LOOP " + image);}
+    |<KW_MATCH: "match"> {System.out.println("KW_MATCH " + image);}
+    |<KW_MOD: "mod" >{System.out.println("KW_MOD " + image);}
+    |<KW_MOVE: "move"> {System.out.println("KW_MOVE " + image);}
+    |<KW_MUT: "mut"> {System.out.println("KW_MUT " + image);}
+    |<KW_PUB: "pub"> {System.out.println("KW_PUB " + image);}
+    |<KW_REF: "ref"> {System.out.println("KW_REF " + image);}
+    |<KW_RETURN: "return"> {System.out.println("KW_RETURN " + image);}
+    |<KW_SELFVALUE: "self"> {System.out.println("KW_SELFVALUE " + image);}
+    |<KW_SELFTYPE: "Self"> {System.out.println("KW_SELFTYPE " + image);}
+    |<KW_STATIC: "static"> {System.out.println("KW_STATIC " + image);}
+    |<KW_STRUCT: "struct"> {System.out.println("KW_STRUCT " + image);}
+    |<KW_SUPER: "super"> {System.out.println("KW_SUPER " + image);}
+    |<KW_TRAIT: "trait" >{System.out.println("KW_TRAIT " + image);}
+    |<KW_TRUE: "true"> {System.out.println("KW_TRUE " + image);}
+    |<KW_TYPE: "type"> {System.out.println("KW_TYPE " + image);}
+    |<KW_UNSAFE: "unsafe"> {System.out.println("KW_UNSAFE " + image);}
+    |<KW_USE: "use"> {System.out.println("KW_USE " + image);}
+    |<KW_WHERE: "where"> {System.out.println("KW_WHERE " + image);}
+    |<KW_WHILE: "while"> {System.out.println("KW_WHILE " + image);}
+    //Lexer 2018+
+    |<KW_ASYNC: "async">{System.out.println("KW_ASYNC " + image);}
+    |<KW_AWAIT: "await">{System.out.println("KW_AWAIT " + image);}
+    
+    //Reserved keywords weak
+    |<KW_UNION: "union">{System.out.println("KW_UNION " + image);}
+    |<KW_STATICLIFETIME: "'static">{System.out.println("KW_STATICLIFETIME " + image);}
+    |<KW_DYN: "dyn">{System.out.println("KW_DYN " + image);}
+
+    //Reserved keywords
+    |<KW_ABSTRACT: "abstract">{System.out.println("KW_ABSTRACT " + image);}
+    |<KW_BECOME: "become">{System.out.println("KW_BECOME " + image);}
+    |<KW_BOX: "box">{System.out.println("KW_BOX " + image);}
+    |<KW_DO: "do">{System.out.println("KW_DO " + image);}
+    |<KW_FINAL: "final">{System.out.println("KW_FINAL " + image);}
+    |<KW_MACRO: "macro">{System.out.println("KW_MACRO " + image);}
+    |<KW_OVERRIDE: "override">{System.out.println("KW_OVERRIDE " + image);}
+    |<KW_PRIV: "priv">{System.out.println("KW_PRIV " + image);}
+    |<KW_TYPEOF: "typeof">{System.out.println("KW_TYPEOF " + image);}
+    |<KW_UNSIZED: "unsized">{System.out.println("KW_UNSIZED " + image);}
+    |<KW_VIRTUAL: "virtual">{System.out.println("KW_VIRTUAL " + image);}
+    |<KW_YIELD: "yield">{System.out.println("KW_YIELD " + image);}
+    //Lexer 2018+
+    |<KW_TRY: "try">{System.out.println("KW_TRY " + image);}
+}
+
+//XID
+
+TOKEN: {
+    <#XID_Start: ["A"-"Z","a"-"z", "_"]>
+    |<#XID_Continue: ["0"-"9","A"-"Z", "_","a"-"z"]>
+
+}
+
+//SUFFIX
+TOKEN: {
+    <#SUFFIX: <IDENTIFIER_OR_KEYWORD>>
+    
+    |<#SUFFIX_NO_E : (~["e","E"])<SUFFIX>>
+    //(["A"-"D","F"-"Z","a"-"d","f"-"z"])
+    |<#SUFFIX_INTEGER: ("u8"| "i8"| "u16"| "i16"| "u32"| "i32"| "u64"| "i64"| "u128"| "i128"| "usize"| "isize")>
+    |<#SUFFIX_FLOAT_POINT: ("f32"|"f64")>
+}
+
+
+//Punctuators
+TOKEN:{
+    <Plus: "+">{System.out.println("+ " + image);}
+    |<Minus: "-">{System.out.println("- " + image);}
+    |<Star: "*">{System.out.println("* " + image);}
+    |<Slash: "/">{System.out.println("/ " + image);}
+    |<Percent: "%">{System.out.println("% " + image);}
+    |<Caret: "^">{System.out.println("CARET " + image);}
+    |<Not: "!">{System.out.println("! " + image);}
+    |<And: "&">{System.out.println("AND " + image);}
+    |<Or: "|">{System.out.println("OR " + image);}
+    |<AndAnd: "&&">{System.out.println("&& " + image);}
+    |<OrOr: "||">{System.out.println("|| " + image);}
+    |<Shl: "<<">{System.out.println("SHL " + image);}
+    |<Shr: ">>">{System.out.println("SHR " + image);}
+    |<PlusEq: "+=">{System.out.println("PLUSEQ " + image);}
+    |<MinusEq: "-=">{System.out.println("MINUSEQ " + image);}
+    |<StarEq: "*=">{System.out.println("STAREQ " + image);}
+    |<SlashEq: "/=">{System.out.println("SLASHEQ " + image);}
+    |<CaretEq: "^=">{System.out.println("CARETEQ " + image);}
+    |<AndEq: "&=">{System.out.println("ANDEQ " + image);}
+    |<OrEq: "|=">{System.out.println("OREQ " + image);}
+    |<ShlEq: "<<=">{System.out.println("SHLEQ " + image);}
+    |<ShrEq: ">>=">{System.out.println("SHREQ " + image);}
+    |<Eq: "=">{System.out.println("= " + image);}
+    |<EqEq: "==">{System.out.println("== " + image);}
+    |<Ne: "!=">{System.out.println("!= " + image);}
+    |<Lt: "<">{System.out.println("< " + image);}
+    |<Le: "<=">{System.out.println("<= " + image);}
+    |<Gt: ">">{System.out.println("> " + image);}
+    |<Ge: ">=">{System.out.println(">= " + image);}
+    |<At: "@" >{System.out.println("AT " + image);}
+    |<Underscore: "_">{System.out.println("UNDERSCORE " + image);}
+    |<Dot: "." >{System.out.println("DOT " + image);}
+    |<DotDot: "..">{System.out.println("DOTDOT " + image);}
+    |<DotDotDot: "...">{System.out.println("DOTDOTDOT " + image);}
+    |<DotDotEq: "..=">{System.out.println("DOTDOTEQ " + image);}
+    |<Comma: "," >{System.out.println(", " + image);}
+    |<Semi: ";" >{System.out.println("; " + image);}
+    |<Colon: ":" >{System.out.println(": " + image);}
+    |<PathSep: "::">{System.out.println(":: " + image);}
+    |<RArrow: "->">{System.out.println("RARROW " + image);}
+    |<FatArrow: "=>">{System.out.println("FATARROW " + image);}
+    |<Pound: "#">{System.out.println("POUND " + image);}
+    |<Dollar: "$">{System.out.println("DOLLAR " + image);}
+    |<Question: "?" >{System.out.println("QUESTION " + image);}
+    |<Tile: "~">{System.out.println("TILDE " + image);}
+
+}
+
+//Identifiers
+TOKEN:{
+    <#IDENTIFIER_OR_KEYWORD: <XID_Start>(<XID_Continue>)*|"_"(<XID_Continue>)+>
+
+    |<IDENTIFIER: <IDENTIFIER_OR_KEYWORD>("!")?|<RAW_IDENTIFIER>> {System.out.println("IDENTIFIER " + image);}
+
+    |<#RAW_IDENTIFIER: "r#"<IDENTIFIER_OR_KEYWORD>
+    //(~["crate", "self" , "super" , "Self" ])
+    >
+
+    |<#NON_KEYWORD_IDENTIFIER: <IDENTIFIER_OR_KEYWORD>
+    //(~["as", "break", "const", "continue", "crate", "else", "enum", "extern", "false", "fn", "for", "if", "impl", "in", "let", "loop", "match", "mod", "move", "mut", "pub", "ref", "return", "self", "Self", "static", "struct", "super", "trait", "true", "type", "unsafe", "use", "where", "while"]|["abstract", "become", "box", "do", "final", "macro", "override", "priv", "typeof", "unsized", "virtual", "yield"])
+    >
+
+}
+//Comments
+SPECIAL_TOKEN:{
+ 
+    
+    <LINE_COMMENT : "//"(~["/","!","\n"]|"//")(~["\n"])*>
+
+
+    |< BLOCK_COMMENT: "/*" ( ~["*","!"] | "\r\n"|"**" )* "*/" >  
+
+
+    |<OUTER_LINE_DOC: "///" (~["/"](~["\n","\r"])*)?>
+
+   
+    |<#IsolatedCR: "\r"(~["\n"])>
+
+
+}
+
+
+// AuxString
+TOKEN:{
+    <#ASCII_ESCAPE: "\\x"<OCT_DIGIT><HEX_DIGIT>|"\\n"|"\\r"|"\\t"|"\\"|"\\0">
+    |<#BYTE_ESCAPE: "\\x"<HEX_DIGIT><HEX_DIGIT>|["\n","\r","\t","\\","\0","\'","\""]>
+    |<#UNICODE_ESCAPE: "\\u{"(<HEX_DIGIT>("_"))?|(<HEX_DIGIT>("_"))?|(<HEX_DIGIT>("_"))?|(<HEX_DIGIT>("_"))?|(<HEX_DIGIT>("_"))?|(<HEX_DIGIT>("_"))?"}">//multiplicar isso
+    |<#QUOTE_ESCAPE: ("\\\""| "\\'")>
+    |<#STRING_CONTINUE : "\\\n"> ///testar isso
+}
+
+
+//Character literals
+TOKEN:{
+    <CHAR_LITERAL: "'"((~["\'","\\","\n","\r"])|<QUOTE_ESCAPE>|<ASCII_ESCAPE>|<UNICODE_ESCAPE>)"'"(<SUFFIX>)?> {System.out.println("CHAR_LITERAL " + image);}
+    
+}
+
+//String literals
+TOKEN:{
+    <STRING_LITERAL: "\""((~["\"","\\"])("\\\n")?|<QUOTE_ESCAPE>
+    |<ASCII_ESCAPE>|<UNICODE_ESCAPE>|<STRING_CONTINUE>
+    )*"\""(<SUFFIX>)?> {System.out.println("STRING_LITERAL " + image);}
+
+}
+
+//Raw string literals
+TOKEN:{
+     //corrigir repetiçao
+    <RAW_STRING_LITERAL: "r"<RAW_STRING_CONTENT>(<SUFFIX>)?> {System.out.println("RAW_STRING_LITERAL " + image);}
+
+    |<#RAW_STRING_CONTENT: "\""(~["\r","\n"])*"\""|"#"("\""(~["\r","\n"])*"\"")*"#"|"#"("\""(~["\r","\n"])*"\"")*"#">
+
+}
+
+//BYTE literals
+TOKEN:{
+    
+    <BYTE_LITERAL: "b'"(<ASCII>|<BYTE_ESCAPE>)"\'"(<SUFFIX>)?> {System.out.println("BYTE_LITERAL " + image);}
+
+    |<#ASCII_FOR_CHAR: (~["\'","\n","\r","\t","\\"])(["\u0000"-"\u007F"])>
+    
+    
+
+}
+//Byte string literals
+TOKEN:{
+    <BYTE_STRING_LITERAL: "b\""(<ASCII_FOR_STRING>|<BYTE_ESCAPE>|<STRING_CONTINUE>)*"\""(<SUFFIX>)?> {System.out.println("BYTE_STRING_LITERAL " + image);}
+
+    |<#ASCII_FOR_STRING: (~["\"","\\","\r","\n"])>
+    
+
+}
+//Raw byte string literals
+TOKEN:{
+    //loop
+    <RAW_BYTE_STRING_LITERAL: "br"<RAW_BYTE_STRING_CONTENT>(<SUFFIX>)?> {System.out.println("RAW_BYTE_STRING_LITERAL " + image);}
+    
+    |<#ASCII: ["\u0000" - "\u007F"]>
+    
+    |<#RAW_BYTE_STRING_CONTENT:"\""(<ASCII>)*"\""|"#""\""(<ASCII>)*"\"""#"|"#""\""(<ASCII>)*"\"""#">
+    
+
+}
+
+// Integer
+TOKEN:{
+    <INTEGER_LITERAL:  (<DEC_LITERAL>|<BIN_LITERAL>|<OCT_LITERAL>|<HEX_LITERAL>)(<SUFFIX_INTEGER>)?> {System.out.println("INTEGER_LITERAL " + image);}
+
+    |<#DEC_LITERAL: <DEC_DIGIT>(<DEC_DIGIT>|"_")*> 
+
+    |<#BIN_LITERAL: "0b"(<BIN_DIGIT>|"_")*<BIN_DIGIT>(<BIN_DIGIT>|"_")*> 
+    
+    |<#OCT_LITERAL: "0o"(<OCT_DIGIT>|"_")*<OCT_DIGIT>(<OCT_DIGIT>|"_")*> 
+    
+    |<#HEX_LITERAL: "0x"(<HEX_DIGIT>|"_")*<HEX_DIGIT>(<HEX_DIGIT>|"_")*> 
+}
+
+// AuxInteger
+TOKEN: {
+    <#BIN_DIGIT: ["0"-"1"]>
+    | <#OCT_DIGIT: ["0"-"7"]>
+    | <#DEC_DIGIT: ["0"-"9"]>
+    | <#HEX_DIGIT: ["0"-"9", "a"-"f", "A"-"F"]>
+
+}
+
+//Floating-point literals
+TOKEN:{
+    <FLOAT_LITERAL: 
+    <DEC_LITERAL>"."(~[".","A"-"Z","a"-"z", "_"])
+    |<DEC_LITERAL>"."<DEC_LITERAL>(<SUFFIX_FLOAT_POINT>)?
+    |<DEC_LITERAL>("."<DEC_LITERAL>)?<FLOAT_EXPONENT>(<SUFFIX>)?> {System.out.println("FLOAT_LITERAL " + image);}
+
+    |<#FLOAT_EXPONENT: ("e"|"E")("+"|"-")?(<DEC_DIGIT>|"_")*<DEC_DIGIT>(<DEC_DIGIT>|"_")*>
+    
+
+}
+
+
+TOKEN:{
+    <RESERVED_NUMBER: 
+    <BIN_LITERAL>["2"-"9"]
+    |<OCT_LITERAL>["8"-"9"]
+    |(<BIN_LITERAL>|<OCT_LITERAL>|<HEX_LITERAL>)"."(~[".","_"])//faixa do ascii
+    |(<BIN_LITERAL>|<OCT_LITERAL>)("e"|"E")
+    |"0b"("_")*(~["0"-"1"])
+    |"0o"("_")*(~["0"-"7"])
+    |"0x"("_")*(~["0"-"9","a"-"f","A"-"F"])
+    |<DEC_LITERAL>("."<DEC_LITERAL>)?("e"|"E")("+"|"-")?(~["0"-"9"])> {System.out.println("RESERVED_NUMBER " + image);}
+}
+//Lifetimes and loop labels
+TOKEN:{
+    <#LIFETIME_TOKEN:"\'"<IDENTIFIER_OR_KEYWORD>|"\'_">
+    //{System.out.println("LIFETIME_TOKEN: " + image);}
+    |<#LIFETIME_OR_LABEL: "\'"<NON_KEYWORD_IDENTIFIER>>
+   // {System.out.println("LIFETIME_OR_LABEL: " + image);}
+}
+
+//Delimiters
+TOKEN:{
+    <CurlyOpen: "{">{System.out.println("{ " + image);}
+    |<CurlyClose: "}">{System.out.println("} " + image);}
+    |<ParenOpen: "(">{System.out.println("( " + image);}
+    |<ParenClose: ")">{System.out.println(") " + image);}
+    |<BracketOpen: "[">{System.out.println("[ " + image);}
+    |<BracketClose: "]">{System.out.println("] " + image);}
+
+}
+
+
+
+
+void Start() : {}
+{
+    (
+        (<INTEGER_LITERAL>)
+        |(<CHAR_LITERAL>)
+        |(<STRING_LITERAL>)
+        |(<FLOAT_LITERAL>)
+        |(<BYTE_LITERAL>)
+        |(<BYTE_STRING_LITERAL>)
+        |(<RAW_STRING_LITERAL>)
+        |(<RAW_BYTE_STRING_LITERAL>)
+        |(<RESERVED_NUMBER>)
+        |(<Plus>)
+        |(<Minus>)
+        |(<Star>)
+        |(<Slash>)
+        |(<Percent>)
+        |(<Caret>)
+        |(<Not>)
+        |(<And>)
+        |(<Or>)
+        |(<AndAnd>)
+        |(<OrOr>)
+        |(<Shl>)
+        |(<Shr>)
+        |(<PlusEq>)
+        |(<MinusEq>)
+        |(<StarEq>)
+        |(<SlashEq>)
+        |(<CaretEq>)
+        |(<AndEq>)
+        |(<OrEq>)
+        |(<ShlEq>)
+        |(<ShrEq>)
+        |(<Eq>)
+        |(<EqEq>)
+        |(<Ne>)
+        |(<Lt>)
+        |(<Le>)
+        |(<Gt>)
+        |(<Ge>)
+        |(<At>)
+        |(<Underscore>)
+        |(<Dot>)
+        |(<DotDot>)
+        |(<DotDotDot>)
+        |(<DotDotEq>)
+        |(<Comma>)
+        |(<Semi>)
+        |(<Colon>)
+        |(<PathSep>)
+        |(<RArrow>)
+        |(<FatArrow>)
+        |(<Pound>)
+        |(<Dollar>)
+        |(<Question>)
+        |(<Tile>)
+        |(<KW_AS>)
+        |(<KW_BREAK>)
+        |(<KW_CONST>)
+        |(<KW_CONTINUE>)
+        |(<KW_CRATE>)
+        |(<KW_ELSE>)
+        |(<KW_ENUM>)
+        |(<KW_EXTERN>)
+        |(<KW_FALSE>)
+        |(<KW_FN>)
+        |(<KW_FOR>)
+        |(<KW_IF>)
+        |(<KW_IMPL>)
+        |(<KW_IN>)
+        |(<KW_LET>)
+        |(<KW_LOOP>)
+        |(<KW_MATCH>)
+        |(<KW_MOD>)
+        |(<KW_MOVE>)
+        |(<KW_MUT>)
+        |(<KW_PUB>)
+        |(<KW_REF>)
+        |(<KW_RETURN>)
+        |(<KW_SELFVALUE>)
+        |(<KW_SELFTYPE>)
+        |(<KW_STATIC>)
+        |(<KW_STRUCT>)
+        |(<KW_SUPER>)
+        |(<KW_TRAIT>)
+        |(<KW_TRUE>)
+        |(<KW_TYPE>)
+        |(<KW_UNSAFE>)
+        |(<KW_USE>)
+        |(<KW_WHERE>)
+        |(<KW_WHILE>)
+        |(<KW_ASYNC>)
+        |(<KW_AWAIT>)
+        |(<KW_DYN>)
+        |(<KW_UNION>)
+        |(<KW_STATICLIFETIME>)
+        |(<KW_ABSTRACT>)
+        |(<KW_BECOME>)
+        |(<KW_BOX>)
+        |(<KW_DO>)
+        |(<KW_FINAL>)
+        |(<KW_MACRO>)
+        |(<KW_OVERRIDE>)
+        |(<KW_PRIV>)
+        |(<KW_TYPEOF>)
+        |(<KW_UNSIZED>)
+        |(<KW_VIRTUAL>)
+        |(<KW_YIELD>)
+    
+        //|(<LIFETIME_TOKEN>)
+        //|(<LIFETIME_OR_LABEL>)
+        |(<CurlyOpen>)
+        |(<CurlyClose>)
+        |(<ParenOpen>)
+        |(<ParenClose>)
+        |(<BracketOpen>)
+        |(<BracketClose>)
+        |(<IDENTIFIER>)
+        //|(<SUFFIX_NO_E>)
+
+
+
+
+    )*
+    <EOF>
+}

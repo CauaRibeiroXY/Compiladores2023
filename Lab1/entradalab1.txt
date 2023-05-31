@@ -1,0 +1,11 @@
+fn main() {
+    let x = 5;
+
+    if x > 0 {
+        println("x é maior do que 0");
+    } else if x < 0 {
+        println("x é menor do que 0");
+    } else {
+        println("x é igual a 0");
+    }
+}
