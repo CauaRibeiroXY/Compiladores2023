@@ -1,0 +1,14 @@
+KW_FN fn
+IDENTIFIER main
+( (
+) )
+{ {
+IDENTIFIER x
+= =
+IDENTIFIER println!
+( (
+STRING_LITERAL "Hello, world!"
+) )
+; ;
+} }
+$ $

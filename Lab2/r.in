@@ -1,0 +1,15 @@
+KW_FN fn
+IDENTIFIER soma
+( (
+IDENTIFIER x
+, ,
+IDENTIFIER y
+) )
+{ {
+KW_LET let
+IDENTIFIER x
+= =
+INTEGER_LITERAL 2
+; ;
+} }
+$ $

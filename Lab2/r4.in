@@ -1,0 +1,26 @@
+KW_FN fn
+IDENTIFIER main
+( (
+) )
+{ {
+KW_IF if
+INTEGER_LITERAL 2
+< <
+INTEGER_LITERAL 3
+{ {
+IDENTIFIER println!
+( (
+STRING_LITERAL "2 is less than 3"
+) )
+; ;
+} }
+KW_ELSE else
+{ {
+IDENTIFIER println!
+( (
+STRING_LITERAL "2 is not less than 3"
+) )
+; ;
+} }
+} }
+$ $

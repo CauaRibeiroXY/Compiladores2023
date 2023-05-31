@@ -1,0 +1,16 @@
+KW_FN fn
+IDENTIFIER main
+( (
+) )
+{ {
+KW_LET let
+IDENTIFIER x
+= =
+[ [
+INTEGER_LITERAL 2
+; ;
+INTEGER_LITERAL 33
+] ]
+; ;
+} }
+$ $
