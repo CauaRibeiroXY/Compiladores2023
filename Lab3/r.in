@@ -1,0 +1,16 @@
+KW_FN fn
+IDENTIFIER soma
+( (
+) )
+{ {
+KW_LET let
+IDENTIFIER c
+: :
+IDENTIFIER BOOL
+; ;
+IDENTIFIER c
+= =
+KW_FALSE false
+; ;
+} }
+$ $
